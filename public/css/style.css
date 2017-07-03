@@ -1,0 +1,14 @@
+.jumbotron .container {
+    padding: 50px 0;
+}
+.disText{
+    display: none;
+}
+.alert {
+    display: none;
+}
+
+h4{
+    display: inline-block;
+    margin: 0 15px;
+}
