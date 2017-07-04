@@ -12,3 +12,9 @@ h4{
     display: inline-block;
     margin: 0 15px;
 }
+a:hover{
+    text-decoration: none;
+}
+.moodList{
+    margin-top:50px;
+}

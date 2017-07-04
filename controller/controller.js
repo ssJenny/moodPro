@@ -5,11 +5,13 @@ var formidable = require('formidable');
 var ObjectID = require('mongodb').ObjectID
 var operaDb = require("../model/operaDb.js");
 var md5 = require("../model/md5.js");        //使用封装好的MD5加密函数
-
+var sillytime = require("silly-datetime")
 //首页
 exports.showIndex = function (req, res, next) {
+    var pageSize = 6;
+    var page = 0
 
-    operaDb.finddb("comment",function (err, result) {
+    operaDb.finddb("comment", [pageSize, page], function (err, result, total) {
         if(err){
             return;
         }
@@ -21,6 +23,7 @@ exports.showIndex = function (req, res, next) {
                 "isLogin":req.session.isLogin,
                 "comment":result,
                 "discuss":dis,
+                "total":total,
                 "active":"index"
             })
         })
@@ -157,10 +160,11 @@ exports.doPunish = function (req, res) {
     form.parse(req, function (err,fields) {
         var username = req.session.username;
         var content = fields.content;
-
+        var time = sillytime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
         operaDb.insertOne("comment",{
             "username":username,
-            "content":content
+            "content":content,
+            "datetime":time
         }, function (err, result) {
             var checkMsg = {
                 "success":false,
@@ -207,4 +211,70 @@ exports.doPunishComment = function (req, res) {
 
         })
     })
+}
+
+exports.showPersonal = function (req, res) {
+    var username = req.params.username
+
+    operaDb.finddb("user", {
+        "username":username
+    }, function (err, result) {
+
+    })
+}
+
+exports.showMoodList = function (req, res) {
+    var pageSize = 6;
+    var page = 0
+
+    operaDb.finddb("comment", [pageSize, page],function (err, result, total) {
+        if(err){
+            return;
+        }
+
+        operaDb.finddb("discuss", function (err, dis) {
+
+            res.render("moodList",{
+                "username":req.session.username,
+                "isLogin":req.session.isLogin,
+                "comment":result,
+                "discuss":dis,
+                "total":total,
+                "pageNum": Math.ceil(total / pageSize),
+                "active":"index"
+            })
+        })
+
+
+    })
+}
+
+exports.showInfoPage = function (req, res) {
+    var page = req.params.pageNum.split("=")[1] -1;
+    // var page = req.params.pageNum;
+    console.log(page)
+    var pageSize = 6;
+
+    operaDb.finddb("comment", [pageSize, page], function (err, result, total) {
+        if(err){
+            return;
+        }
+
+        operaDb.finddb("discuss", function (err, dis) {
+
+            res.render("moodList",{
+                "username":req.session.username,
+                "isLogin":req.session.isLogin,
+                "comment":result,
+                "discuss":dis,
+                "total":total,
+                "page":page,
+                "pageNum": Math.ceil(total / pageSize),
+                "active":"index"
+            })
+        })
+
+
+    })
+
 }

@@ -22,15 +22,16 @@ app.listen(3000)
 app.get("/",router.showIndex);
 
 
+app.get("/loginOut", router.loginOut)
 app.get("/register",router.showRegister)
 app.get("/login",router.showLogin)
+app.get("/personal:username", router.showPersonal)
+app.get("/moodList", router.showMoodList)
+app.get("/:pageNum", router.showInfoPage)
+
 
 
 app.post("/doRegister",router.doRegister)
 app.post("/doLogin", router.doLogin)
-
-//退出
-app.get("/loginOut", router.loginOut)
-
 app.post("/doPunish", router.doPunish)
 app.post("/doPunishComment", router.doPunishComment)

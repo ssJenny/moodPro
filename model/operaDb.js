@@ -96,17 +96,28 @@ exports.finddb = function(A,B,C,D){
 
     collectdb(function(err,db){
 
+        var totalNum = 0;
+        //查询总数
+        db.collection(collectionName).find(json).count(function (err, count) {
+            if (err){
+                console.log(err)
+                return
+            }
+            totalNum = count
+        });
+
+
         var cursor = db.collection(collectionName).find(json).limit(args.countNum).skip(args.countNum*args.page);
         var result = [];
         cursor.each(function(err,doc){
             if(err){
-                callback(err,null);
+                callback(err,null,null);
                 return;
             }
             if(doc != null){
                 result.push(doc);
             }else{
-                callback(null,result)
+                callback(null,result,totalNum)
                 db.close();
             }
         })
