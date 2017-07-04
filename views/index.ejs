@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container moodList">
     <!-- Example row of columns -->
    <% for ( var i = 0; i < comment.length; i++){%>
     <div class="row">
@@ -79,9 +79,11 @@
                 <% for(var j = 0; j < discuss.length; j++){ %>
 
                     <div class="row">
-                        <div class="col-md-8 ">
+                        <div class="col-md-12 ">
+
                             <% if(discuss[j].commentId == comment[i]._id){ %>
-                              <p><h4><a href="/personal:<%= discuss[i].username %>"><%= discuss[j].username %></a>:</h4><%= discuss[j].content %> </p>
+                              <p><h4><a href="/<%= discuss[j].username %>"><%= discuss[j].username %></a>:</h4><%= discuss[j].content %> </p>
+                                <p class="text-right"><%= discuss[j].datetime %></p>
                             <% } %>
 
                         </div>
@@ -97,7 +99,7 @@
                 <div class="form-group disText" >
 
                    <textarea class="form-control" rows="3"></textarea>
-                   <p style="float: right; margin-top: 5px"><button class="btn btn-primary punishComment" data-commentid="" >发表</button></p>
+                   <p style="float: right; margin-top: 5px"><button class="btn btn-primary punishComment" data-commentid="<% comment[i]._id%>" >发表</button></p>
                 </div>
 
             <div class="alert alert-danger" id="<%= comment[i]._id %>"></div>
@@ -105,7 +107,7 @@
         </div>
 
     </div>
-    <hr >
+
 
 
     <% } %>

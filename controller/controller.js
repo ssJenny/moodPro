@@ -13,6 +13,7 @@ exports.showIndex = function (req, res, next) {
 
     operaDb.finddb("comment", [pageSize, page], function (err, result, total) {
         if(err){
+            next()
             return;
         }
 
@@ -189,10 +190,11 @@ exports.doPunishComment = function (req, res) {
     form.parse(req, function (err,fields) {
         var commentId = fields.commentId;
         var content = fields.content;
-
+        var time = sillytime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
         operaDb.insertOne("discuss",{
             "commentId":commentId,
             "content":content,
+            "datetime":time,
             "username":req.session.username
         }, function (err, result) {
             var checkMsg = {
@@ -214,12 +216,31 @@ exports.doPunishComment = function (req, res) {
 }
 
 exports.showPersonal = function (req, res) {
-    var username = req.params.username
-
+    var pageSize = 6;
+    var page = 0
+    var username = req.params.username.split(":")[1]
+    console.log(username)
     operaDb.finddb("user", {
         "username":username
     }, function (err, result) {
 
+       operaDb.finddb("comment", {
+           "username":username
+       },  [pageSize, page], function (err, comment, total) {
+           console.log(comment)
+           operaDb.finddb("discuss", function (err, dis) {
+
+               res.render("personal",{
+                   "username":username,
+                   "isLogin":req.session.isLogin,
+                   "comment":comment,
+                   "discuss":dis,
+                   "total":total,
+                   "pageNum": Math.ceil(total / pageSize)
+
+               })
+           })
+       })
     })
 }
 
@@ -251,8 +272,6 @@ exports.showMoodList = function (req, res) {
 
 exports.showInfoPage = function (req, res) {
     var page = req.params.pageNum.split("=")[1] -1;
-    // var page = req.params.pageNum;
-    console.log(page)
     var pageSize = 6;
 
     operaDb.finddb("comment", [pageSize, page], function (err, result, total) {

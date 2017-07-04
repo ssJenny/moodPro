@@ -15,7 +15,9 @@
 
             <ul class="nav navbar-nav">
                 <li <% if( active == "index"){%> class="active" <% } %>><a href="./">首页 <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">我的说说</a></li>
+                <% if (isLogin){%>
+                <li><a href="/personal:<%= username%>">我的说说</a></li>
+                <% } %>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
