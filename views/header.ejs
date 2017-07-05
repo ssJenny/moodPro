@@ -16,14 +16,14 @@
             <ul class="nav navbar-nav">
                 <li <% if( active == "index"){%> class="active" <% } %>><a href="./">首页 <span class="sr-only">(current)</span></a></li>
                 <% if (isLogin){%>
-                <li><a href="/personal:<%= username%>">我的说说</a></li>
+                <li<% if( active == "personal"){%> class="active" <% } %>><a href="/personal:<%= loginname%>">我的说说</a></li>
                 <% } %>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if( isLogin ){ %>
 
-                <li><a href="#"><%= username %></a></li>
+                <li><a href="/personal:<%= loginname%>"><%= loginname %></a></li>
                 <li><a href="/loginOut">退出</a></li>
                 <% }else{ %>
 

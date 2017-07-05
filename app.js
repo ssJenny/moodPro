@@ -8,6 +8,7 @@ var router = require("./controller/controller.js")
 app.set("view engine","ejs");
 
 app.use(express.static("./public"));
+app.use(express.static("./upload"));
 
 app.use(session({
     secret: 'keyboard cat',
@@ -28,10 +29,11 @@ app.get("/login",router.showLogin)
 app.get("/personal:username", router.showPersonal)
 app.get("/moodList", router.showMoodList)
 app.get("/:pageNum", router.showInfoPage)
-
+app.get("/:personalPage", router.showPersonalInfoPage)
 
 
 app.post("/doRegister",router.doRegister)
 app.post("/doLogin", router.doLogin)
 app.post("/doPunish", router.doPunish)
 app.post("/doPunishComment", router.doPunishComment)
+app.post("/doUpdatePic", router.doUpdatePic)

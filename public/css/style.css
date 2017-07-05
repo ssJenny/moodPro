@@ -18,7 +18,8 @@ a:hover{
 .moodList{
     margin-top:50px;
 }
-.slideContainer{
+.slideContainer,
+.InforBox{
     margin-top: 50px;
 }
 h3.text-muted{
@@ -29,4 +30,31 @@ h3.text-muted{
 }
 .moodList>.row .col-md-10{
     border-bottom: 1px solid #eee;
+}
+.userinfor img{
+    width: 200px;
+    height: 200px;
+}
+.userinfor p{
+    line-height: 40px;
+}
+.updateInfo{
+    display: none;
+}
+.touxbox{
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+.touxbox .updTx{
+    display: none;
+    width: 100%;
+    position: absolute;
+    bottom:0;
+}
+.touxbox:hover .updTx{
+    display: block;
+}
+.updTx button{
+    width: 100%;
 }

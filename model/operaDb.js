@@ -32,7 +32,7 @@ exports.insertOne = function(collectionName,json,callback){
 //数据库修改
 exports.updateMany= function(collectionName,oJson,nJosn,callback){
     collectdb(function(err,db){
-        db.collection(collectionName).updateMany(oJson,nJosn,function(err,rusult){
+        db.collection(collectionName).updateMany(oJson,{$set:nJosn},function(err,rusult){
             if(err){
                 callback(err,null);
                 return;

@@ -18,25 +18,47 @@
 </head>
 
 <body>
+<% include header.ejs %>
 
-<div class="container">
-    <div class="header clearfix personHead">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="/">Home</a></li>
-                <li role="presentation"><a href="#">About</a></li>
-                <li role="presentation"><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted"><%= username %></h3>
-    </div>
+    <% include slider.ejs %>
 
 
+      <div class="container InforBox">
+          <div class="row ">
+              <div class="col-md-2 ">
+                  <div class="userinfor">
+                      <div class="row">
+                          <div class="touxbox">
+                              <% if(user[0].touxiang){ %>
+                                <img src="<%= user[0].touxiang %>" alt="">
+                              <% }else{ %>
+                              <img src="img/toux.jpg" alt="">
+                              <% } %>
+                              <% if(loginname == user[0].username){%>
+                              <div class="updTx text-center">
+                                  <!--<a href="">修改头像</a>-->
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                      修改头像
+                                  </button>
+                              </div>
+                              <% } %>
 
-        <% include slider.ejs %>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <p>姓名：<%= user[0].username %></p>
+
+                      </div>
+                  </div>
+
+              </div>
 
 
-    <div class="container moodList">
+          <!--</div>-->
+      <!--</div>-->
+
+
+    <div class="col-md-8">
         <% for ( var i = 0; i < comment.length; i++){%>
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
@@ -81,18 +103,55 @@
         <% } %>
         <% if(total >6){%>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1"><button type="button" class="btn  btn-block " onclick="location='/moodList'">更多>></button></div>
+            <nav aria-label="..." class="col-sm-offset-1 col-sm-11">
+                <ul class="pagination">
+                    <% for ( var i = 1; i <= pageNum; i++){ %>
+                    <li><a href="/<%=user[0].username %>?page=<%= i %>"><%= i %></a></li>
+
+                    <% } %>
+                </ul>
+            </nav>
         </div>
         <% } %>
     </div>
-
+          </div>
+      </div>
     <footer class="footer">
         <p class="text-center">&copy; 2017 Personal, ciyel.</p>
     </footer>
 
 </div> <!-- /container -->
+<!-- Button trigger modal -->
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="/doUpdatePic" method="post" enctype="multipart/form-data">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">用户头像</h4>
+                </div>
+                <div class="modal-body">
+
+                        <div class="form-group">
+                            <label for="">选择图片：</label>
+                            <input id="filename" name="filename" type="file" >
+                        </div>
+                    <div class="alert alert-danger" id="updPicError"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" id="updatePic" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 <script src="js/jquery-1.11.3.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/punish.js"></script>
 </html>
