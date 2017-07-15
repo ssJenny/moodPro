@@ -28,9 +28,14 @@
 <div class="container moodList" >
     <!-- Example row of columns -->
     <% for ( var i = 0; i < comment.length; i++){%>
-    <div class="row">
+    <div class="row friends-item">
         <div class="col-md-10 col-md-offset-1">
-            <h2><a href="/personal:<%= comment[i].username %>"><%= comment[i].username %></a></h2>
+            <%for (var k = 0; k < user.length; k++){%>
+            <%if(user[k].username == comment[i].username){%>
+           <h2> <img src="<%= user[k].touxiang %>" alt="">
+           <a href="/personal:<%= comment[i].username %>"><%= comment[i].username %></a></h2>
+            <%}}%>
+
             <p><%= comment[i].content %> </p>
             <p class="text-right"><%= comment[i].datetime %></p>
 
@@ -38,8 +43,16 @@
 
             <div class="row">
                 <div class="col-md-8 ">
-                    <% if(discuss[j].commentId == comment[i]._id){ %>
-                    <p><h4><a href="/<%= discuss[j].username %>"><%= discuss[j].username %></a>:</h4><%= discuss[j].content %> </p>
+                    <% if(discuss[j].discussId == comment[i]._id){ %>
+                    <p>
+                    <h4>
+                        <% for(var k = 0; k < user.length; k++){
+                        if( user[k].username == discuss[j].username){%>
+                        <img src="<%= user[k].touxiang %>" alt="">
+                        <% } }%>
+                        <a href="/<%= discuss[j].username %>"><%= discuss[j].username %></a>:
+                    </h4>
+                    <%= discuss[j].content %> </p>
                     <% } %>
 
                 </div>
@@ -77,7 +90,7 @@
            </nav>
        </div>
     <% } %>
-    <hr>
+
     <footer>
         <p class="text-center">&copy; 2017 Personal, ciyel.</p>
     </footer>

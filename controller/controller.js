@@ -12,13 +12,21 @@ var fs = require("fs")
 exports.showIndex = function (req, res, next) {
     var pageSize = 6;
     var page = 0
+    var user = {};
+    operaDb.finddb("user", function (err, result) {
+        if(err){
+            return
+        }
+        user = result
+
+    })
 
     operaDb.finddb("comment", [pageSize, page], function (err, result, total) {
         if(err){
             next()
             return;
         }
-
+        console.log(result)
         operaDb.finddb("discuss", function (err, dis) {
 
             res.render("index",{
@@ -27,6 +35,7 @@ exports.showIndex = function (req, res, next) {
                 "comment":result,
                 "discuss":dis,
                 "total":total,
+                "user":user,
                 "active":"index"
             })
         })
@@ -195,6 +204,7 @@ exports.doPunishComment = function (req, res) {
         console.log(discussId)
         var content = fields.content;
         var time = sillytime.format(new Date(), 'YYYY-MM-DD HH:mm:ss');
+
         operaDb.insertOne("discuss",{
             "discussId":discussId,
             "content":content,
@@ -257,6 +267,14 @@ exports.showPersonal = function (req, res) {
 exports.showMoodList = function (req, res) {
     var pageSize = 6;
     var page = 0
+    var user = {}
+    operaDb.finddb("user", function (err, result) {
+        if(err){
+            return
+        }
+        user = result
+
+    })
 
     operaDb.finddb("comment", [pageSize, page],function (err, result, total) {
         if(err){
@@ -272,6 +290,7 @@ exports.showMoodList = function (req, res) {
                 "discuss":dis,
                 "total":total,
                 "pageNum": Math.ceil(total / pageSize),
+                "user":user,
                 "active":"index"
             })
         })
@@ -283,6 +302,14 @@ exports.showMoodList = function (req, res) {
 exports.showInfoPage = function (req, res, next) {
     var page = req.params.pageNum.split("=")[1] -1;
     var pageSize = 6;
+    var user = {};
+    operaDb.finddb("user", function (err, result) {
+        if(err){
+            return
+        }
+        user = result
+
+    })
 
     operaDb.finddb("comment", [pageSize, page], function (err, result, total) {
         if(err){
@@ -300,6 +327,7 @@ exports.showInfoPage = function (req, res, next) {
                 "total":total,
                 "page":page,
                 "pageNum": Math.ceil(total / pageSize),
+                "user":user,
                 "active":"index"
             })
         })
@@ -314,6 +342,15 @@ exports.showPersonalInfoPage = function (req, res, next) {
     var pageSize = 6;
 
     var username = req.params.personalPage.split("?")[0]
+
+    var user = {};
+    operaDb.finddb("user", function (err, result) {
+        if(err){
+            return
+        }
+        user = result
+
+    })
 
 
 
@@ -341,6 +378,7 @@ exports.showPersonalInfoPage = function (req, res, next) {
                     "discuss":dis,
                     "total":total,
                     "pageNum": Math.ceil(total / pageSize),
+                    "user":user,
                     "active":"personal"
 
                 })

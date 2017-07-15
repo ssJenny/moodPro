@@ -23,23 +23,32 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
-        <form enctype="multipart/form-data" method="post">
-            <div class="form-group">
-                <label for="exampleInputEmail1">用户名</label>
-                <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">密码</label>
-                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-            </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> 同意网站协议
-                </label>
-            </div>
-            <button type="button" class="btn btn-default" id="btn">注册</button>
-        </form>
-        <div class="alert alert-danger" id="alert"></div>
+       <div class="row">
+           <div class="col-md-7">
+               <h3>
+                   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad animi beatae cupiditate dolore dolorum ea eveniet fuga magnam minima minus molestias nihil non, nostrum odit quaerat quasi sunt suscipit ut?
+               </h3>
+           </div>
+           <div class="col-md-5">
+               <form enctype="multipart/form-data" method="post">
+                   <div class="input-group">
+                       <span class="input-group-addon" id="basic-addon1">用户名</span>
+                       <input type="text" class="form-control" id="username" placeholder="Username" name="username" aria-describedby="basic-addon1">
+                   </div>
+                   <div class="input-group">
+                       <span class="input-group-addon" id="basic-addon2">密码</span>
+                       <input type="password" class="form-control" id="password" placeholder="Password" name="password" aria-describedby="basic-addon2">
+                   </div>
+                   <div class="checkbox">
+                       <label>
+                           <input type="checkbox"> 同意网站协议
+                       </label>
+                   </div>
+                   <button type="button" class="btn btn-default" id="btn">注册</button>
+               </form>
+               <div class="alert alert-danger" id="alert"></div>
+           </div>
+       </div>
     </div>
 </div>
 </div>

@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="ciyel">
     <!--<link rel="icon" href="../../favicon.ico">-->
 
-    <title>空间说说</title>
+    <title>心情说</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -23,18 +23,18 @@
 <% include header.ejs %>
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
+<div class="jumbotron bg-con">
     <div class="container">
        <div class="row">
            <% if(isLogin){ %>
-           <div class="col-md-11 col-md-offset-1">
+           <div class="col-md-12">
 
                    <div class="form-group">
                        <h3>说点什么</h3>
-                       <textarea id="content" class="form-control" rows="3"></textarea>
+                       <textarea id="content" class="form-control" rows="5" style="background: #404040; border: 1px solid #999"></textarea>
                    </div>
 
-                   <input id="punish" style="float: right;" type="submit" class="btn btn-primary btn-lg" value="发表">
+                   <input id="punish" style="float: right; background: #808080;border: 0" type="submit" class="btn btn-primary btn-lg" value="发表">
 
                <div class="alert alert-danger" id="punishError"></div>
            </div>
@@ -42,7 +42,7 @@
 
 
            <div class="col-md-5 col-md-offset-1">
-               <h1>空间说说</h1>
+               <h1>心情说</h1>
                <p>欢迎注册</p>
                <p><a class="btn btn-primary btn-lg" href="/register" role="button">注册</a></p>
                </div>
@@ -69,10 +69,17 @@
 
 <div class="container moodList">
     <!-- Example row of columns -->
+
    <% for ( var i = 0; i < comment.length; i++){%>
-    <div class="row">
+    <div class="row friends-item">
         <div class="col-md-10 col-md-offset-1">
-            <h2><a href="/personal:<%= comment[i].username %>"><%= comment[i].username %></a></h2>
+            <h2><a href="/personal:<%= comment[i].username %>">
+                    <%for (var k = 0; k < user.length; k++){%>
+                    <%if(user[k].username == comment[i].username){%>
+                    <img src="<%= user[k].touxiang %>" alt="">
+                    <%= comment[i].username %></a>
+                    <%}}%>
+            </h2>
             <p><%= comment[i].content %> </p>
             <p class="text-right"><%= comment[i].datetime %></p>
 
@@ -81,8 +88,19 @@
                     <div class="row">
                         <div class="col-md-12 ">
 
-                            <% if(discuss[j].discussId == comment[i]._id){ %>
-                              <p><h4><a href="/<%= discuss[j].username %>"><%= discuss[j].username %></a>:</h4><%= discuss[j].content %> </p>
+                            <% if(discuss[j].discussId == comment[i]._id){%>
+
+                            <p >
+                                <h4>
+                            <% for(var k = 0; k < user.length; k++){
+                            if( user[k].username == discuss[j].username){%>
+                                <img src="<%= user[k].touxiang %>" alt="">
+                            <% } }%>
+
+                                    <a href="/<%= discuss[j].username %>"><%= discuss[j].username %></a>:
+                                </h4>
+                                <%= discuss[j].content %>
+                            </p>
                                 <p class="text-right"><%= discuss[j].datetime %></p>
                             <% } %>
 
@@ -98,8 +116,8 @@
 
                 <div class="form-group disText" >
 
-                   <textarea class="form-control" rows="3"></textarea>
-                   <p style="float: right; margin-top: 5px"><button class="btn btn-primary punishComment" data-commentid="<%= comment[i]._id%>" >发表</button></p>
+                   <textarea class="form-control" rows="3" style="background: #404040; border: 1px solid #999"></textarea>
+                   <p style="float: right; margin-top: 5px"><button class="btn btn-primary punishComment" style="background: #808080;border: 0" data-commentid="<%= comment[i]._id%>" >发表</button></p>
                 </div>
 
             <div class="alert alert-danger" id="<%= comment[i]._id %>"></div>
@@ -112,11 +130,11 @@
 
     <% } %>
     <% if(total >6){%>
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1"><button type="button" class="btn  btn-block " onclick="location='/moodList'">更多>></button></div>
+    <div class="row more">
+        <div class="col-md-12"><button type="button" class="btn  btn-block " onclick="location='/moodList'">更多>></button></div>
     </div>
     <% } %>
-    <hr>
+
     <footer>
         <p class="text-center">&copy; 2017 Personal, ciyel.</p>
     </footer>
